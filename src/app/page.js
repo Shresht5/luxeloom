@@ -1,6 +1,7 @@
 import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
-import NavBar from "@/components/navBar";
+import HomeList from "@/components/HomeList";
+import NavBar from "@/components/NavBar";
 import Image from "next/image";
 
 
@@ -20,12 +21,13 @@ export default function Home() {
         </div>
       </div>
       <div>
-        <div>product view</div>
+        <div>
+          <HomeList />
+        </div>
       </div>
       <div>
         <Footer />
       </div>
     </div>
-
   );
 }

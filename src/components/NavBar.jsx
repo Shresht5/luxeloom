@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 const NavBar = () => {
@@ -8,13 +9,13 @@ const NavBar = () => {
             </div>
             <div className='flex items-center space-x-4'>
                 <div className=' p-2.5'>
-                    <p>Contact</p>
+                    <Link href='/discover'>Discover</Link>
                 </div>
                 <div className=' p-2.5'>
                     <p>Cart</p>
                 </div>
                 <div className=' p-2.5'>
-                    <p>Login</p>
+                    <Link href='/login'>Login</Link>
                 </div>
             </div>
         </div>
