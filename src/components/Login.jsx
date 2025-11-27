@@ -15,28 +15,37 @@ export default function LoginForm() {
         e.preventDefault();
         router.back();
     }
+
     async function formSubmit(e) {
         e.preventDefault();
-        if (!login) {
-            if (password !== confirmPassword) {
-                console.log('password not match')
-                return;
-            }
+
+        if (!login && password !== confirmPassword) {
+            console.log('Passwords do not match');
+            return;
         }
-        const res = await fetch(`/api/user/${login ? 'login' : 'signup'}`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-        })
-        const data = await res.json()
-        console.log(data);
-        localStorage.setItem('LgoinId', data.LoginId)
+
+        try {
+            const res = await fetch(`/api/user/${login ? 'login' : 'signup'}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const data = await res.json();
+            console.log(data);
+
+            if (data.success) {
+                localStorage.setItem('LoginId', data.LoginId);
+                router.push('/');
+                alert('User signed in');
+            } else {
+                alert(`Error: ${data.message}`);
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Network or server error');
+        }
     }
-
-
-
 
     return (
         <div className="relative h-screen flex justify-center items-center bg-cover bg-center">

@@ -23,7 +23,7 @@ export async function POST(req) {
 
         return NextResponse.json(
             { message: "User login successfully", success: true, LoginId: user.email },
-            { status: 201 }
+            { status: 200 }
         );
     } catch (error) {
         return NextResponse.json(

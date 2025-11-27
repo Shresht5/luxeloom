@@ -9,6 +9,11 @@ const ProductList = () => {
 
     const [products, setProducts] = useState([]);
     const [showfilter, setShowFilter] = useState(false);
+    const [showProducts, setShowProducts] = useState([]);
+    const [searchInput, setSearchInput] = useState('');
+    const [filters, setFilters] = useState({
+        sort: '', price: "", clothtype: '', producttype: ''
+    });
 
     async function callAllproduct() {
         const res = await fetch('/api/product/allproduct')
@@ -44,8 +49,8 @@ const ProductList = () => {
             {/* main */}
             <div className='flex relative'>
                 {/* filter */}
-                <div className={`flex ${showfilter ? '' : "hidden"} xl:block xl:flex-row-reverse`}>
-                    <form className='absolute xl:static flex z-20 flex-col w-[250px] p-2 space-y-1.5 bg-gray-100 h-full'>
+                <div className={`flex ${showfilter ? '' : "hidden"} lg:block lg:flex-row-reverse`}>
+                    <form className='absolute lg:static flex z-20 flex-col w-[250px] p-2 space-y-1.5 bg-gray-100 h-full'>
                         <h4 className='px-5 py-1 shadow text-md mt-3 bg-white'>sort</h4>
                         <label>
                             <input type='radio' name='sort' />

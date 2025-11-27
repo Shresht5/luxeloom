@@ -1,12 +1,16 @@
 'use client'
+import { addCart } from '@/redux/cartSlice';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux';
 
 const Productshow = () => {
   const [product, setProduct] = useState({});
+  const [qty, setQty] = useState(1);
   const searchParams = useSearchParams();
   const productid = searchParams.get('productid')
+  const dispatch = useDispatch();
 
   async function productCalling() {
 
@@ -28,10 +32,23 @@ const Productshow = () => {
 
   if (!product) { return <div>loding data ...</div> }
 
+  async function buyNowFun() {
+    const userId = localStorage.getItem('LoginId');
+    const res = await fetch(`/api/order/placeorder`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ userId, productId: product._id, qty })
+    })
+    const data = await res.json()
+    console.log(data);
+  }
+
   return (
-    <div className='w-screen'>
-      <div className=''>
-        <div className="relative w-full aspect-square">
+    <div className='w-screen bg-blue-50'>
+      <div className=' lg:flex'>
+        <div className="relative w-full lg:w-[50%] max-w-lg sm:m-4  aspect-square">
           {product?.image ? (
             <Image
               src={product.image}
@@ -43,19 +60,37 @@ const Productshow = () => {
             ''
           )}
         </div>
-        <div className='p-2'>
-          <h3 className='font-semibold'>{product.name}</h3>
+        <div className='p-2  space-y-2 sm:w-full'>
+          <h3 className='font-semibold text-xl py-2 sm:text-2xl'>{product.name}</h3>
           <div className='flex'>
             <h3 className='text-red-500 font-bold'>Rs {product.currentprice}</h3>
             <h2 className=' ml-2 text-gray-700 line-through'>Rs {product.mrp}</h2>
           </div>
-          <div className='w-full grid grid-cols-2 py-4'>
-            <button className='w-48 p-2 text-gray-200  bg-gray-700 '>buy now</button>
-            <button className='w-48 p-2 text-gray-200  bg-gray-700 '>Add to cart</button>
+          <div className='flex'>
+            <h2 className=' font-semibold text-md text-gray-600'>cloth type : </h2><p className='ml-2'>{product.clothtype}</p>
+          </div>
+          <div className='flex'>
+            <h2 className=' font-semibold text-md text-gray-600'>product type : </h2><p className='ml-2'>{product.producttype}</p>
+          </div>
+          <div className='flex'>
+            <h2 className=' font-semibold text-md text-gray-600'>color : </h2><p className='ml-2'>{product.color}</p>
+          </div>
+          <div className='flex'>
+            <h2 className=' font-semibold text-md text-gray-600'>detail : </h2><p className='ml-2'>{product.detail}</p>
+          </div>
+
+          <div className='flex justify-center'>
+            <button onClick={() => { setQty(qty - 1) }} className='bg-white px-2 drop-shadow-md'>-</button>
+            <input value={qty} onChange={(e) => { setQty(e.target.value) }} className='bg-white px-2 w-[100px] drop-shadow-md'></input>
+            <button onClick={() => { setQty(qty + 1) }} className='bg-white px-2 drop-shadow-md'>+</button>
+          </div>
+
+          <div className='w-full flex space-x-3 py-4'>
+            <button type='button' onClick={buyNowFun} className='w-48 p-2 text-gray-200 cursor-pointer bg-gray-700 '>buy now</button>
+            <button className='w-48 p-2 text-gray-200 cursor-pointer  bg-gray-700 ' onClick={() => { dispatch(addCart({ product, qty })); console.log('done') }}>Add to cart</button>
           </div>
         </div>
       </div>
-      <div>otherrandom</div>
     </div>
   )
 }

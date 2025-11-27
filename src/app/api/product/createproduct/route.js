@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req) {
     try {
-        const { name, currentprice, mrp, rating, color, clothtype, detail, image } = await req.json();
+        const { name, currentprice, mrp, color, clothtype, producttype, detail, image } = await req.json();
         if (!name || !currentprice || !mrp) {
             return NextResponse.json(
                 { success: false, message: "enter all fields" },
@@ -17,8 +17,8 @@ export async function POST(req) {
                 { message: "product already exists", success: false },
                 { status: 400 }
             );
-        }
-        const product = new productModel({ name, currentprice, mrp, rating, color, clothtype, detail, image })
+        };
+        const product = new productModel({ name, currentprice, mrp, color, clothtype, producttype, detail, image })
         await product.save();
         return NextResponse.json(
             { message: "product created successfully", success: true, product },
