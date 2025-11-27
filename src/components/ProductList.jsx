@@ -12,21 +12,42 @@ const ProductList = () => {
     const [showProducts, setShowProducts] = useState([]);
     const [searchInput, setSearchInput] = useState('');
     const [filters, setFilters] = useState({
-        sort: '', price: "", clothtype: '', producttype: ''
+        sort: 'a-z', price: "100000", clothtype: 'all', producttype: 'all'
     });
 
     async function callAllproduct() {
         const res = await fetch('/api/product/allproduct')
         const data = await res.json();
-        console.log(data);
+        console.log('API : ', data);
 
         setProducts(data.products)
-        console.log(products);
+        setShowProducts(data.products)
+        console.log('products : ', products);
+    }
+
+
+    function handleSearch() {
+        const input = searchInput.toLowerCase().trim();
+        const searched = products.filter((p) =>
+            p.name.toLowerCase().split(' ').some((d) => d.startsWith(input))
+        );
+        setShowProducts(searched);
+    }
+
+    function handleFilterChange(e) {
+        setFilters({
+            ...filters,
+            [e.target.name]: e.target.value
+        });
     }
 
     useEffect(() => {
         callAllproduct();
     }, []);
+    useEffect(() => {
+        console.log(filters);
+
+    }, [filters]);
 
     return (
         <div>
@@ -38,8 +59,8 @@ const ProductList = () => {
                 </button>
                 <div className='w-full'>
                     <div className='flex items-center mx-auto  max-w-xl p-1'>
-                        <input className='w-full' placeholder='Search' />
-                        <button>
+                        <input className='w-full' value={searchInput} onChange={(e) => setSearchInput(e.target.value)} placeholder='Search' />
+                        <button onClick={handleSearch}>
                             <IoMdSearch className='text-2xl ml-2' />
                         </button>
                     </div>
@@ -52,59 +73,90 @@ const ProductList = () => {
                 <div className={`flex ${showfilter ? '' : "hidden"} lg:block lg:flex-row-reverse`}>
                     <form className='absolute lg:static flex z-20 flex-col w-[250px] p-2 space-y-1.5 bg-gray-100 h-full'>
                         <h4 className='px-5 py-1 shadow text-md mt-3 bg-white'>sort</h4>
-                        <label>
-                            <input type='radio' name='sort' />
-                            price low to high
-                        </label>
-                        <label>
-                            <input type='radio' name='sort' />
-                            price high to low
-                        </label>
-                        <label>
-                            <input type='radio' name='sort' />
+
+                        <label className='text-gray-600'>
+                            <input type='radio' name='sort' value="a-z" />
                             A - Z
                         </label>
-                        <label>
-                            <input type='radio' name='sort' />
+
+                        <label className='text-gray-600'>
+                            <input type='radio' name='sort' value="z-a" />
                             Z - A
+                        </label>
+
+                        <label className='text-gray-600'>
+                            <input type='radio' name='sort' value="low-high" />
+                            price low to high
+                        </label>
+
+                        <label className='text-gray-600'>
+                            <input type='radio' name='sort' value="high-low" />
+                            price high to low
                         </label>
 
                         <h4 className='px-5 py-1 shadow text-md mt-3 bg-white'>under price</h4>
 
-                        <input type="text" name="price" placeholder='enter price' />
+                        <input
+                            className='text-gray-600 border-[1px] px-1 border-gray-600 rounded-lg focus:outline-none'
+                            type="number"
+                            name="price"
+                            placeholder='enter price'
+                            value={filters.price}
+                            onChange={handleFilterChange}
+                        />
+
+
                         <h4 className='px-5 py-1 shadow text-md mt-3 bg-white'>type</h4>
-                        <label>
-                            <input type='radio' name='producttype' />
+                        <label className='text-gray-600'>
+                            <input type='radio' name='producttype' value="all" />
+                            all
+                        </label>
+                        <label className='text-gray-600'>
+                            <input type='radio' name='producttype' value="curtain" />
                             curtain
-                        </label><label>
-                            <input type='radio' name='producttype' />
+                        </label>
+
+                        <label className='text-gray-600'>
+                            <input type='radio' name='producttype' value="pillow" />
                             pillow
-                        </label><label>
-                            <input type='radio' name='producttype' />
+                        </label>
+
+                        <label className='text-gray-600'>
+                            <input type='radio' name='producttype' value="carpet" />
                             carpet
                         </label>
+
+
                         <h4 className='px-5 py-1 shadow text-md mt-3 bg-white'>cloth type</h4>
-                        <label>
-                            <input type='radio' name='clothtype' />
+
+                        <label className='text-gray-600'>
+                            <input type='radio' name='clothtype' value="all" />
+                            all
+                        </label>
+                        <label className='text-gray-600'>
+                            <input type='radio' name='clothtype' value="cotton" />
                             cotton
                         </label>
-                        <label>
-                            <input type='radio' name='clothtype' />
+
+                        <label className='text-gray-600'>
+                            <input type='radio' name='clothtype' value="polyster" />
                             polyster
                         </label>
-                        <label>
-                            <input type='radio' name='clothtype' />
+
+                        <label className='text-gray-600'>
+                            <input type='radio' name='clothtype' value="terycote" />
                             terycote
                         </label>
 
-
-                        {/* background */}
-                        <button type='button' className='bg-gray-800 text-white p-1.5 mt-3'>Submit</button>
+                        <button type='button' className='bg-gray-800 text-white p-1.5 mt-3'>
+                            Submit
+                        </button>
                     </form>
+
                 </div>
                 {/* list */}
                 <div className=' bg-gray-100 sm:p-5 grid gap-5 grid-cols-2 md:grid-cols-3 xl:grid-cols-4 w-full'>
-                    {products.map((product, id) =>
+                    {showProducts.map((product, id) =>
                         <div key={id} className='bg-white'>
                             <Link href={`/product?productid=${product._id}`}>
                                 <div className='relative w-full aspect-square'>
