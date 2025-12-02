@@ -75,22 +75,22 @@ const ProductList = () => {
                         <h4 className='px-5 py-1 shadow text-md mt-3 bg-white'>sort</h4>
 
                         <label className='text-gray-600'>
-                            <input type='radio' name='sort' value="a-z" />
+                            <input type='radio' name='sort' checked={filters.sort === "a-z"} onChange={handleFilterChange} value="a-z" />
                             A - Z
                         </label>
 
                         <label className='text-gray-600'>
-                            <input type='radio' name='sort' value="z-a" />
+                            <input type='radio' name='sort' checked={filters.sort === "z-a"} onChange={handleFilterChange} value="z-a" />
                             Z - A
                         </label>
 
                         <label className='text-gray-600'>
-                            <input type='radio' name='sort' value="low-high" />
+                            <input type='radio' name='sort' checked={filters.sort === "low-high"} onChange={handleFilterChange} value="low-high" />
                             price low to high
                         </label>
 
                         <label className='text-gray-600'>
-                            <input type='radio' name='sort' value="high-low" />
+                            <input type='radio' name='sort' checked={filters.sort === "high-low"} onChange={handleFilterChange} value="high-low" />
                             price high to low
                         </label>
 
@@ -105,24 +105,23 @@ const ProductList = () => {
                             onChange={handleFilterChange}
                         />
 
-
                         <h4 className='px-5 py-1 shadow text-md mt-3 bg-white'>type</h4>
                         <label className='text-gray-600'>
-                            <input type='radio' name='producttype' value="all" />
+                            <input type='radio' name='producttype' checked={filters.producttype === "all"} onChange={handleFilterChange} value="all" />
                             all
                         </label>
                         <label className='text-gray-600'>
-                            <input type='radio' name='producttype' value="curtain" />
+                            <input type='radio' name='producttype' checked={filters.producttype === "curtain"} onChange={handleFilterChange} value="curtain" />
                             curtain
                         </label>
 
                         <label className='text-gray-600'>
-                            <input type='radio' name='producttype' value="pillow" />
+                            <input type='radio' name='producttype' checked={filters.producttype === "pillow"} onChange={handleFilterChange} value="pillow" />
                             pillow
                         </label>
 
                         <label className='text-gray-600'>
-                            <input type='radio' name='producttype' value="carpet" />
+                            <input type='radio' name='producttype' checked={filters.producttype === "carpet"} onChange={handleFilterChange} value="carpet" />
                             carpet
                         </label>
 
@@ -130,21 +129,21 @@ const ProductList = () => {
                         <h4 className='px-5 py-1 shadow text-md mt-3 bg-white'>cloth type</h4>
 
                         <label className='text-gray-600'>
-                            <input type='radio' name='clothtype' value="all" />
+                            <input type='radio' name='clothtype' checked={filters.clothtype === "all"} onChange={handleFilterChange} value="all" />
                             all
                         </label>
                         <label className='text-gray-600'>
-                            <input type='radio' name='clothtype' value="cotton" />
+                            <input type='radio' name='clothtype' checked={filters.clothtype === "cotton"} onChange={handleFilterChange} value="cotton" />
                             cotton
                         </label>
 
                         <label className='text-gray-600'>
-                            <input type='radio' name='clothtype' value="polyster" />
+                            <input type='radio' name='clothtype' checked={filters.clothtype === "polyster"} onChange={handleFilterChange} value="polyster" />
                             polyster
                         </label>
 
                         <label className='text-gray-600'>
-                            <input type='radio' name='clothtype' value="terycote" />
+                            <input type='radio' name='clothtype' checked={filters.clothtype === "terycote"} onChange={handleFilterChange} value="terycote" />
                             terycote
                         </label>
 
@@ -152,7 +151,6 @@ const ProductList = () => {
                             Submit
                         </button>
                     </form>
-
                 </div>
                 {/* list */}
                 <div className=' bg-gray-100 sm:p-5 grid gap-5 grid-cols-2 md:grid-cols-3 xl:grid-cols-4 w-full'>
