@@ -1,13 +1,21 @@
 'use client'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 const NavBar = () => {
+    const Router = useRouter();
     const [login, setLogin] = useState(false)
+    const [adminShow, setAdminShow] = useState(false);
+
+
     useEffect(() => {
         const user = localStorage.getItem('LoginId')
         if (user && user !== '') {
             setLogin(true);
+        }
+        if (user && user === 'admin@gmail.com') {
+            setAdminShow(true);
         }
     }, [])
     return (
@@ -21,19 +29,21 @@ const NavBar = () => {
                 </div>
                 <div className=' p-2.5'>
                     <Link href='/cart'>Cart</Link>
-
                 </div>
-                {login ? (<div className=' p-2.5'>
-                    <button className=' cursor-pointer' onClick={() => { localStorage.removeItem('LoginId'); setLogin(false); }}>Logout</button>
-                </div>
+                {adminShow && (
+                    <div className=' p-2.5'>
+                        <Link href='/admin/products'>Admin</Link>
+                    </div>
+                )}
+                {login ? (
+                    <div className=' p-2.5'>
+                        <button className=' cursor-pointer' onClick={() => { localStorage.removeItem('LoginId'); setLogin(false); setAdminShow(false) }}>Logout</button>
+                    </div>
                 ) : (
                     <div className=' p-2.5'>
                         <Link href='/login'>Login</Link>
                     </div>
-
-                )
-                }
-
+                )}
             </div>
         </div>
     )

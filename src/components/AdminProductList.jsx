@@ -77,6 +77,7 @@ const ProductList = () => {
 
             {/* main */}
             <div className='flex relative'>
+
                 {/* filter */}
                 <div className={`flex ${showfilter ? '' : "hidden"} lg:block lg:flex-row-reverse`}>
                     <form onSubmit={handleFilterSerch} className='absolute lg:static flex z-20 flex-col w-[250px] p-2 space-y-1.5 bg-gray-100 h-full'>
@@ -160,11 +161,12 @@ const ProductList = () => {
                         </button>
                     </form>
                 </div>
+
                 {/* list */}
                 <div className=' bg-gray-100 sm:p-5 grid gap-5 grid-cols-2 md:grid-cols-3 xl:grid-cols-4 w-full'>
                     {showProducts.map((product, id) =>
                         <div key={id} className='bg-white'>
-                            <Link href={`/product?productid=${product._id}`}>
+                            <Link href={`/admin/product?productid=${product._id}`}>
                                 <div className='relative w-full aspect-square'>
                                     <Image
                                         src={product.image}

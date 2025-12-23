@@ -20,18 +20,6 @@ const Productshow = () => {
     setProduct(data.product);
   }
 
-  useEffect(() => {
-    productCalling();
-  }, [productid]);
-
-  useEffect(() => {
-    if (product) {
-      console.log('updated product', product)
-    }
-  }, [product]);
-
-  if (!product) { return <div>loding data ...</div> }
-
   async function buyNowFun() {
     const userId = localStorage.getItem('LoginId');
     const res = await fetch(`/api/order/placeorder`, {
@@ -45,10 +33,23 @@ const Productshow = () => {
     console.log(data);
   }
 
+  useEffect(() => {
+    productCalling();
+  }, [productid]);
+
+  useEffect(() => {
+    if (product) {
+      console.log('updated product', product)
+    }
+  }, [product]);
+
+  if (!product) { return <div>loding data ...</div> }
+
+
   return (
     <div className='w-screen bg-blue-50'>
-      <div className=' lg:flex'>
-        <div className="relative w-full lg:w-[50%] max-w-lg sm:m-4  aspect-square">
+      <div className=' md:flex'>
+        <div className="relative w-full md:max-w-[50vw] max-w-screen   aspect-square">
           {product?.image ? (
             <Image
               src={product.image}

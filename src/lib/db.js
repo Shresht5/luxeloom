@@ -3,6 +3,6 @@ export async function connectDB() {
     if (mongoose.connection.readyState >= 1) {
         return;
     }
-    mongoose.connect(process.env.MONGODB_URI);
+    mongoose.connect(`${process.env.MONGODB_URI}`);
     console.log('mongoconnect');
 }
