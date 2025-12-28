@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { IoReorderThreeOutline } from "react-icons/io5";
 import { IoMdSearch } from "react-icons/io";
+import { FiFilter } from "react-icons/fi";
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -63,7 +64,7 @@ const ProductList = () => {
             {/* search bar */}
             <div className='flex items-center px-5 py-2.5'>
                 <button onClick={() => setShowFilter(!showfilter)}>
-                    <IoReorderThreeOutline className='text-4xl' />
+                    <FiFilter className='text-2xl' />
                 </button>
                 <div className='w-full'>
                     <div className='flex items-center mx-auto  max-w-xl p-1'>

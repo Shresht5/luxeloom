@@ -7,12 +7,13 @@ import { useDispatch } from 'react-redux';
 
 const Productshow = () => {
     const defaultform = { name: '', image: '', color: '', clothtype: '', producttype: '', detail: '', mrp: 0, currentprice: 0 }
-    const [product, setProduct] = useState({});
-    const [qty, setQty] = useState(1);
+
+    const [product, setProduct] = useState(false);
+    const [form, setForm] = useState(defaultform)
+
+    const dispatch = useDispatch();
     const searchParams = useSearchParams();
     const productid = searchParams.get('productid')
-    const [form, setForm] = useState(defaultform)
-    const dispatch = useDispatch();
 
     async function productCalling() {
         const res = await fetch(`/api/product/singleproduct?productid=${productid}`)
@@ -22,18 +23,43 @@ const Productshow = () => {
         setForm({ ...defaultform, ...data.product })
     }
 
-    async function buyNowFun() {
-        const userId = localStorage.getItem('LoginId');
-        const res = await fetch(`/api/order/placeorder`, {
-            method: "POST",
+    async function saveProduct(e) {
+        e.preventDefault();
+        const loginId = localStorage.getItem('LoginId')
+        if (!product) {
+            const res = await fetch(`/api/product/createproduct`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ loginId, ...form })
+            })
+            const data = await res.json()
+            console.log('save product ', data);
+        } else {
+            const res = await fetch(`/api/product/updateproduct`, {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ loginId, ...form })
+            })
+            const data = await res.json()
+            console.log('update product', data);
+        }
+    }
+
+    async function handleDelete() {
+        const res = await fetch(`/api/product/deleteproduct?id=${form._id}`, {
+            method: "DELETE",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ userId, productId: product._id, qty })
         })
         const data = await res.json()
-        console.log(data);
+        console.log('delete product', data);
     }
+
     function handleFormChange(e) {
         setForm({
             ...form,
@@ -52,17 +78,14 @@ const Productshow = () => {
         }
     }, [product]);
 
-    if (!product) { return <div>loding data ...</div> }
-
-
     return (
         <div className='w-screen bg-blue-50'>
             <form>
                 <div className=' md:flex'>
                     <div className="relative w-full md:max-w-[50vw] max-w-screen   aspect-square">
-                        {product?.image ? (
+                        {form.image ? (
                             <Image
-                                src={product.image}
+                                src={form.image}
                                 alt={'Product image'}
                                 fill
                                 className="object-cover"
@@ -177,8 +200,10 @@ const Productshow = () => {
                         />
 
                         <div className='w-full flex space-x-3 py-4'>
-                            <button type='button' onClick={buyNowFun} className='w-48 p-2 text-gray-200 cursor-pointer bg-gray-700 '>Save</button>
-                            <button className='w-48 p-2 text-gray-200 cursor-pointer  bg-gray-700 ' onClick={() => { dispatch(addCart({ product, qty })); console.log('done') }}>Delete</button>
+                            <button type='button' onClick={saveProduct} className='w-48 p-2 text-gray-200 cursor-pointer bg-gray-700 '>Save</button>
+                            {product && (
+                                <button className='w-48 p-2 text-gray-200 cursor-pointer  bg-gray-700 ' onClick={() => { handleDelete() }}>Delete</button>
+                            )}
                         </div>
                     </div>
                 </div>

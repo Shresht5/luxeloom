@@ -1,6 +1,7 @@
 'use client'
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { MdDeleteOutline } from "react-icons/md";
 import { removeCart } from '@/redux/cartSlice'
 import NavBar from '@/components/NavBar'
 import Footer from '@/components/Footer'
@@ -59,7 +60,7 @@ const CartPage = () => {
                                             onClick={() => dispatch(removeCart(index))}
                                             className="text-red-500 text-sm hover:underline"
                                         >
-                                            Remove
+                                            <MdDeleteOutline className='text-2xl' />
                                         </button>
                                     </div>
                                 </div>

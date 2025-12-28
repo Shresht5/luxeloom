@@ -32,7 +32,7 @@ const NavBar = () => {
                 </div>
                 {adminShow && (
                     <div className=' p-2.5'>
-                        <Link href='/admin/products'>Admin</Link>
+                        <Link href='/admin'>Admin</Link>
                     </div>
                 )}
                 {login ? (
