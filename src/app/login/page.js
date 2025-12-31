@@ -1,5 +1,5 @@
 'use client'
-import Login from '@/components/login';
+import Login from '@/components/Login';
 import Image from 'next/image';
 import React from 'react'
 import { FaArrowLeft } from "react-icons/fa";
