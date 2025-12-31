@@ -10,7 +10,7 @@ const pages = () => {
                 <NavBar />
             </div>
             <div>
-                <Suspense fallback={<div>Loading products...</div>}>
+                <Suspense>
                     <Productshow />
                 </Suspense>
             </div>
