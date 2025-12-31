@@ -1,7 +1,7 @@
 import Footer from '@/components/Footer'
 import NavBar from '@/components/NavBar'
 import Productshow from '@/components/Productshow'
-import React from 'react'
+import React, { Suspense } from 'react'
 
 const pages = () => {
     return (
@@ -10,7 +10,9 @@ const pages = () => {
                 <NavBar />
             </div>
             <div>
-                <Productshow />
+                <Suspense fallback={<div>Loading products...</div>}>
+                    <Productshow />
+                </Suspense>
             </div>
             <div>
                 <Footer />
