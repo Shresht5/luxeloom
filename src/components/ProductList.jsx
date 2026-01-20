@@ -63,8 +63,9 @@ const ProductList = () => {
 
             {/* search bar */}
             <div className='flex items-center px-5 py-2.5'>
-                <button onClick={() => setShowFilter(!showfilter)}>
+                <button onClick={() => setShowFilter(!showfilter)} className='flex space-x-1'>
                     <FiFilter className='text-2xl' />
+                    <h3 className='hidden  sm:block text-gray-400'>filter</h3>
                 </button>
                 <div className='w-full'>
                     <div className='flex items-center mx-auto  max-w-xl p-1'>

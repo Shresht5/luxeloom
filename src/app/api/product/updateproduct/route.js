@@ -4,14 +4,14 @@ import { NextResponse } from "next/server";
 
 export async function PUT(req) {
     try {
-        const { _id, name, currentprice, mrp, rating, color, clothtype, detail, image } = await req.json();
+        const { _id, name, currentprice, mrp, rating, color, clothtype, producttype, detail, image } = await req.json();
         if (!name || !currentprice || !mrp) {
             return NextResponse.json(
                 { success: false, message: "enter all fields" },
                 { status: 400 })
         }
         await connectDB();
-        const product = await productModel.findByIdAndUpdate(_id, { name, currentprice, mrp, rating, color, clothtype, detail, image }, { new: true });
+        const product = await productModel.findByIdAndUpdate(_id, { name, currentprice, mrp, rating, color, clothtype, producttype, detail, image }, { new: true });
         if (!product) {
             return NextResponse.json(
                 { message: "product not found", success: false },
