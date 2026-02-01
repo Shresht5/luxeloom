@@ -14,7 +14,6 @@ const HomeList = () => {
     console.log(data);
 
     setProducts(data.products)
-    console.log(products);
   }
   const scroll = (ref_, direction) => {
     ref_.current.scrollBy({ left: direction === "left" ? -300 : 300, behavior: 'smooth' });
@@ -24,7 +23,7 @@ const HomeList = () => {
     callAllproduct();
   }, []);
   return (
-    <div className='space-y-8  w-screen p-2 bg-gradient-to-l to-blue-200 from-blue-400'>
+    <div className='space-y-8  w-screen p-2 bg-gradient-to-t to-[#19645b] from-cyan-300'>
       {/* upperSection */}
       <div>
         <div className=' border-0  bg-blue-100 drop-shadow-lg p-4 sm:pl-8 '>

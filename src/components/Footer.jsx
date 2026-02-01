@@ -10,7 +10,7 @@ import { FaLinkedin } from "react-icons/fa6";
 const Footer = () => {
     return (
         <div className='min-h-screen flex flex-col justify-end'>
-            <div className='min-h-[67vh] bg-gradient-to-b md:flex md:bg-gradient-to-r from-cyan-50 to-cyan-300'>
+            <div className='min-h-[67vh] bg-gradient-to-t md:flex md:bg-gradient-to-r from-cyan-50 to-cyan-300'>
                 <div className=' md:w-[100%] flex flex-col justify-center items-center md:items-start space-y-5 py-6 px-1 md:pl-10'>
                     <h2 className='text-2xl'><b>LuxLoom</b> gives you <b>style</b>.</h2>
                     <p>Elevate your living spaces with LuxLoom, your global destination for premium home décor.Delivering worldwide, LuxLoom brings quality, style, and sophistication right to your doorstep.</p>

@@ -2,6 +2,8 @@
 import { FaArrowLeft, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { signIn } from "next-auth/react";
 
 export default function LoginForm() {
     const [passwordShow, setPasswordShow] = useState(false);
@@ -46,6 +48,11 @@ export default function LoginForm() {
             alert('Network or server error');
         }
     }
+    async function googleSignIn() {
+        const res = signIn("google", { callbackUrl: "/" });
+
+        console.log(res);
+    }
 
     return (
         <div className="relative h-screen flex justify-center items-center bg-cover bg-center">
@@ -63,6 +70,7 @@ export default function LoginForm() {
 
                 {/* Inputs */}
                 <div className="space-y-5 px-2">
+
                     {/* Email */}
                     <label className="relative block">
                         <span className="absolute -top-3 left-2 text-white text-sm bg-[rgba(0,0,0,0.7)] px-1 rounded-md">
@@ -98,6 +106,7 @@ export default function LoginForm() {
                             {passwordShow ? <FaEyeSlash /> : <FaEye />}
                         </button>
                     </label>
+
                     {/* Confirm Pasword  */}
                     {login ? '' :
                         <label className="relative block">
@@ -108,7 +117,6 @@ export default function LoginForm() {
                                 name='confirmPassword'
                                 value={confirmPassword}
                                 onChange={(e) => { setConfirmPassword(e.target.value) }}
-
                                 type={passwordShow ? "text" : "password"}
                                 className="w-full p-3 text-white border border-white rounded-lg bg-transparent focus:border-blue-300 outline-none pr-10"
                             />
@@ -122,6 +130,21 @@ export default function LoginForm() {
                         </label>
                     }
                 </div>
+                <button
+                    type="button"
+                    className="flex justify-center items-center w-full text-white cursor-pointer"
+                    onClick={googleSignIn}
+                >
+                    <Image
+                        src={'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Google_Favicon_2025.svg/250px-Google_Favicon_2025.svg.png'}
+                        alt="google"
+                        width={30}
+                        height={10}
+                    />
+                    <div className="pl-2">
+                        <h4 className="text-md">SignUp with Google</h4>
+                    </div>
+                </button>
 
                 {/* Signup link */}
                 <div className="flex justify-center space-x-2 text-white">
